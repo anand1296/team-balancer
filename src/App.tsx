@@ -7,6 +7,7 @@ import { useTeamBalancer } from "./hooks/useTeamBalancer";
 import type { Player, Team } from "./types";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./components/ThemeToggle";
+import "./App.css";
 
 export default function App() {
   const [players, setPlayers] = useLocalStorage<Player[]>("players", []);
@@ -34,6 +35,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-emerald-50 to-indigo-50 flex flex-col items-center px-4 sm:px-6 md:px-12 py-10 overflow-x-hidden">
+      {/* toggle between light and dark mode */}
       <ThemeToggle />
       <div className="w-full max-w-6xl">
         <motion.h1
@@ -58,7 +60,7 @@ export default function App() {
         >
           {/* LEFT SECTION */}
           <motion.div
-            className={`flex-1 w-full md:max-w-sm ${
+            className={`flex-1 w-full md:max-w-lg ${
               !teams.length ? "text-center" : ""
             }`}
             initial={{ opacity: 0 }}
@@ -69,9 +71,16 @@ export default function App() {
               players={players}
               onUpdate={(updatedPlayers) => setPlayers(updatedPlayers)}
             />
+            
+            {/* Helper message */}
+            {!canGenerate && (
+              <p className="text-sm text-start text-gray-500 mb-6">
+                Add at least <strong>4 players</strong> to generate teams.
+              </p>
+            )}
 
             {/* Player Form */}
-            <PlayerForm onAdd={handleAddPlayer} />
+            <PlayerForm onAdd={handleAddPlayer} existingPlayers={players} />
 
             {/* Team Count Input */}
             <div className="bg-white/80 backdrop-blur-md shadow-md border border-gray-100 p-5 rounded-2xl mb-6">
@@ -95,32 +104,22 @@ export default function App() {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 mb-8">
               <button
                 onClick={handleGenerate}
                 disabled={!canGenerate}
-                className={`px-5 py-3 rounded-xl w-full sm:w-auto transition-transform shadow-sm text-white ${
-                  canGenerate
-                    ? "bg-emerald-600 hover:bg-emerald-700 hover:scale-[1.02]"
-                    : "bg-gray-300 cursor-not-allowed"
-                }`}
+                className="px-5 py-3 rounded-xl w-full sm:w-auto transition-transform shadow-sm text-white"
               >
                 🎲 Generate Teams
               </button>
               <button
                 onClick={handleClear}
-                className="bg-rose-500 hover:bg-rose-600 text-white px-5 py-3 rounded-xl w-full sm:w-auto transition-transform hover:scale-[1.02] active:scale-95 shadow-sm"
+                disabled={players.length === 0 && teams.length === 0}
+                className="bg-rose-500 hover:bg-rose-600 text-white px-5 py-3 rounded-xl w-full sm:w-auto transition-transform active:scale-95 shadow-sm"
               >
                 🧹 Clear All
               </button>
             </div>
-
-            {/* Helper message */}
-            {!canGenerate && (
-              <p className="text-sm text-gray-500 mb-6">
-                Add at least <strong>4 players</strong> to generate teams.
-              </p>
-            )}
 
             <BalanceIndicator balance={balance} />
           </motion.div>
