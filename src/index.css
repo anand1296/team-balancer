@@ -1,6 +1,3 @@
-/* ✅ Enable class-based dark mode in Tailwind v4 */
-@config "darkMode: 'class'";
-
 /* ✅ Import Tailwind layers */
 @import "tailwindcss";
 
