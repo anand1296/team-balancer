@@ -39,7 +39,7 @@ export default function App() {
       {/* <ThemeToggle /> */}
       <div className="w-full max-w-6xl">
         <motion.h1
-          className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-emerald-700 tracking-tight drop-shadow-sm"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-gray-800/80 tracking-tight drop-shadow-sm"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
