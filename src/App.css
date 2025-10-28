@@ -36,12 +36,3 @@
   color: #888;
 }
 
-button:hover {
-  transform: scale(1.02);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: default;
-  transform: none;
-}
