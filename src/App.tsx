@@ -138,8 +138,7 @@ export default function App() {
       </div>
 
       <footer className="mt-12 text-center text-sm text-gray-500">
-        Made with 💚 by{" "}
-        <span className="text-emerald-600 font-semibold">You</span>
+        Made with 🩶
       </footer>
     </div>
   );
