@@ -6,6 +6,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useTeamBalancer } from "./hooks/useTeamBalancer";
 import type { Player, Team } from "./types";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useEffect } from "react";
 // import ThemeToggle from "./components/ThemeToggle";
 import "./App.css";
 
@@ -14,12 +15,21 @@ export default function App() {
   const [numTeams, setNumTeams] = useLocalStorage<number>("numTeams", 2);
   const [teams, setTeams] = useLocalStorage<Team[]>("teams", []);
   const { generateBalancedTeams, getBalanceScore } = useTeamBalancer();
+  const teamsRef = useRef<HTMLDivElement>(null);
 
   const handleAddPlayer = (player: Player) => setPlayers([...players, player]);
   const handleGenerate = () => {
     const newTeams = generateBalancedTeams(players, numTeams);
     setTeams(newTeams);
   };
+
+  useEffect(() => {
+    if (teams.length > 0 && window.innerWidth < 768) {
+      setTimeout(() => {
+        teamsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [teams]);
   const handleClear = () => {
     if (confirm("Clear all data?")) {
       setPlayers([]);
@@ -124,6 +134,7 @@ export default function App() {
 
           {/* RIGHT SECTION */}
           <motion.div
+            ref={teamsRef}
             className="flex-1 w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
