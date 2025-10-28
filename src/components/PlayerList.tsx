@@ -71,12 +71,12 @@ export default function PlayerList({ players, onUpdate }: PlayerListProps) {
                 <>
                   <div className="flex flex-col sm:flex-row gap-2 flex-1">
                     <input
-                      className="border border-gray-300 dark:border-gray-600 p-2 rounded-lg flex-1 bg-transparent focus:ring-2 focus:ring-emerald-400 text-sm sm:text-base"
+                      className="w-3/4 border border-gray-300 dark:border-gray-600 p-2 rounded-lg bg-transparent focus:ring-2 focus:ring-emerald-400 text-sm sm:text-base"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                     />
                     <input
-                      className="border border-gray-300 dark:border-gray-600 p-2 rounded-lg w-20 bg-transparent focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
+                      className="w-1/4 border border-gray-300 dark:border-gray-600 p-2 rounded-lg bg-transparent focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
                       type="number"
                       min="0"
                       max="10"

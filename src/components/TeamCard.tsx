@@ -19,7 +19,7 @@ export default function TeamCard({ team, index }: TeamCardProps) {
         className={`${colors[index % colors.length]} text-white p-3 font-bold`}
       >
         Team {index + 1}{" "}
-        {!!team.totalScore && <span> — Total: {team.totalScore}</span>}
+        {!!team.totalScore && <span> — Score: {team.totalScore}</span>}
       </div>
       <ul className="divide-y divide-gray-200 text-slate-700">
         {team.players.map((p, j) => (
