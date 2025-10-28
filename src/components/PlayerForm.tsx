@@ -53,13 +53,13 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-md border border-gray-100 dark:border-gray-700 p-5 rounded-2xl mb-6 transition-colors"
+      className="bg-white/80 backdrop-blur-md shadow-md border border-gray-100 p-5 rounded-2xl mb-6 transition-colors"
     >
-      <h2 className="text-xl font-semibold text-slate-700 dark:text-gray-100 mb-3">
+      <h2 className="text-xl font-semibold text-slate-700 mb-3">
         👥 Add Player <span className="text-rose-500">*</span>
       </h2>
 
-      <div className="flex flex-col sm:flex-row gap-3 items-start">
+      <div className="flex flex-col gap-3 items-start">
         {/* Player Name Field */}
         <div className="flex-1 w-full">
           <input
@@ -84,7 +84,7 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
             min: 0,
             max: 10,
           })}
-          className="border border-gray-300 dark:border-gray-600 p-3 rounded-lg w-full sm:w-24 focus:ring-2 focus:ring-indigo-400 outline-none"
+          className="border border-gray-300 p-3 rounded-lg w-full sm:w-24 focus:ring-2 focus:ring-indigo-400 outline-none"
           placeholder="Score (1-10)"
           type="number"
         />

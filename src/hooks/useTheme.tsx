@@ -6,9 +6,10 @@ export function useTheme() {
     // Prefer stored theme over system preference
     const stored = localStorage.getItem("theme");
     if (stored === "dark" || stored === "light") return stored;
-
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return prefersDark ? "dark" : "light";
+    
+    return stored as "light" | "dark" || "light";
+    // const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    // return prefersDark ? "dark" : "light";
   });
 
   useEffect(() => {

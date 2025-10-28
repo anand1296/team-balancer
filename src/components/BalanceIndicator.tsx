@@ -17,7 +17,7 @@ export default function BalanceIndicator({ balance }: BalanceIndicatorProps) {
 
   return (
     <motion.div
-      className="bg-white shadow p-3 rounded-xl w-full max-w-lg mb-6 text-center"
+      className="bg-white shadow p-3 rounded-xl w-full mb-6 text-center"
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}

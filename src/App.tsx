@@ -6,7 +6,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useTeamBalancer } from "./hooks/useTeamBalancer";
 import type { Player, Team } from "./types";
 import { motion, AnimatePresence } from "framer-motion";
-import ThemeToggle from "./components/ThemeToggle";
+// import ThemeToggle from "./components/ThemeToggle";
 import "./App.css";
 
 export default function App() {
@@ -36,7 +36,7 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-emerald-50 to-indigo-50 flex flex-col items-center px-4 sm:px-6 md:px-12 py-10 overflow-x-hidden">
       {/* toggle between light and dark mode */}
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <div className="w-full max-w-6xl">
         <motion.h1
           className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-emerald-700 tracking-tight drop-shadow-sm"
@@ -115,13 +115,11 @@ export default function App() {
               <button
                 onClick={handleClear}
                 disabled={players.length === 0 && teams.length === 0}
-                className="bg-rose-500 hover:bg-rose-600 text-white px-5 py-3 rounded-xl w-full sm:w-auto transition-transform active:scale-95 shadow-sm"
+                className="bg-white! text-gray-800/80! border-gray-800/80! px-5 py-3 rounded-xl w-full sm:w-auto transition-transform active:scale-95 shadow-sm"
               >
                 🧹 Clear All
               </button>
             </div>
-
-            <BalanceIndicator balance={balance} />
           </motion.div>
 
           {/* RIGHT SECTION */}
@@ -131,6 +129,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
+            <BalanceIndicator balance={balance} />
             <AnimatePresence>
               {teams.length > 0 && <TeamGrid teams={teams} />}
             </AnimatePresence>
