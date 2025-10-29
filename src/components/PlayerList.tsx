@@ -47,7 +47,7 @@ export default function PlayerList({ players, onUpdate }: PlayerListProps) {
         📋 Player List ({players.length})
       </h2>
 
-      <div className="h-48 overflow-y-auto border-t border-gray-200 dark:border-gray-600 pt-2 pr-1">
+      <div className="max-h-48 overflow-y-auto border-t border-gray-200 dark:border-gray-600 pt-2 pr-1">
         <AnimatePresence>
           {players.length === 0 && (
             <motion.p

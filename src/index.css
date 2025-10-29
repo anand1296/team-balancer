@@ -44,7 +44,7 @@ button:hover {
 
 button:focus,
 button:focus-visible {
-  @apply outline-none ring-2 ring-indigo-400 ring-offset-2;
+  @apply outline-none;
 }
 button:disabled {
   @apply opacity-50 cursor-default;
