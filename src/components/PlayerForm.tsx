@@ -25,7 +25,7 @@ export default function PlayerForm({
     clearErrors,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: { name: "", score: 1 },
+    defaultValues: { name: "", score: undefined },
     mode: "onChange",
   });
 
