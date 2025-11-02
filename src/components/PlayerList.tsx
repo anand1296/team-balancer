@@ -1,14 +1,16 @@
 import { useState } from "react";
-import type { Player } from "../types";
+import type { Player, Team } from "../types";
 import { Pencil, Trash2, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface PlayerListProps {
   players: Player[];
   onUpdate: (updatedPlayers: Player[]) => void;
+  teams: Team[];
+  setShowRegenerateTeamsModal: (value: boolean) => void;
 }
 
-export default function PlayerList({ players, onUpdate }: PlayerListProps) {
+export default function PlayerList({ players, onUpdate, teams, setShowRegenerateTeamsModal }: PlayerListProps) {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [editScore, setEditScore] = useState<number | string>("");
@@ -34,11 +36,13 @@ export default function PlayerList({ players, onUpdate }: PlayerListProps) {
     };
     onUpdate(updated);
     cancelEdit();
+    if (teams.length > 0) setShowRegenerateTeamsModal(true);
   };
 
   const deletePlayer = (index: number) => {
     const updated = players.filter((_, i) => i !== index);
     onUpdate(updated);
+    if (teams.length > 0) setShowRegenerateTeamsModal(true);
   };
 
   return (

@@ -1,6 +1,6 @@
 export type Player = {
   name: string;
-  score: number;
+  score: number ;
 }
 
 export type Team = {

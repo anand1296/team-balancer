@@ -1,6 +1,11 @@
 /* ✅ Import Tailwind layers */
 @import "tailwindcss";
 
+/* ✅ Custom utilities */
+@utility text-2xs {
+  font-size: 10px;
+}
+
 /* ✅ Set global sizing & smooth transitions */
 html,
 body,

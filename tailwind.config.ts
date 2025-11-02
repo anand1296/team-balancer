@@ -7,7 +7,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        '2xs': '10px',
+      }
+    },
   },
   plugins: [],
 } satisfies Config;

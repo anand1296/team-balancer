@@ -18,6 +18,8 @@ export default function App() {
   const { generateBalancedTeams, getBalanceScore } = useTeamBalancer();
   const teamsRef = useRef<HTMLDivElement>(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [showRegenerateTeamsModal, setShowRegenerateTeamsModal] =
+    useState(false);
 
   const handleAddPlayer = (player: Player) => setPlayers([...players, player]);
   const handleGenerate = () => {
@@ -25,7 +27,10 @@ export default function App() {
     setTeams(newTeams);
     if (window.innerWidth < 768) {
       setTimeout(() => {
-        teamsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        teamsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }, 100);
     }
   };
@@ -84,8 +89,10 @@ export default function App() {
           >
             {/* Player List */}
             <PlayerList
+              teams={teams}
               players={players}
               onUpdate={(updatedPlayers) => setPlayers(updatedPlayers)}
+              setShowRegenerateTeamsModal={setShowRegenerateTeamsModal}
             />
 
             {/* Player Form */}
@@ -110,7 +117,7 @@ export default function App() {
                       setNumTeams(Math.max(2, Number(e.target.value)))
                     }
                   />
-                  <span className="text-xs italic text-gray-500 mt-1">
+                  <span className="text-2xs md:text-xs italic text-gray-500 mt-1">
                     Min: {2} | Max:{" "}
                     {players.length < 4 ? 2 : Math.floor(players.length / 2)}
                   </span>
@@ -169,9 +176,17 @@ export default function App() {
         onCancel={cancelClear}
       />
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
-        Made with 🩶
-      </footer>
+      {/* regenerate teams modal */}
+      <ConfirmationDialog
+        open={showRegenerateTeamsModal}
+        title="Re-generate teams?"
+        description=" You’ve edited the player list. Do you want to re-generate the teams now?"
+        onConfirm={() => {
+          handleGenerate();
+          setShowRegenerateTeamsModal(false);
+        }}
+        onCancel={() => setShowRegenerateTeamsModal(false)}
+      />
     </div>
   );
 }

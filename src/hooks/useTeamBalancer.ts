@@ -4,10 +4,11 @@ export function useTeamBalancer() {
   const generateBalancedTeams = (players: Player[], numTeams: number): Team[] => {
     if (players.length < numTeams) return [];
 
-    // 🧠 If all players have identical scores, just shuffle randomly
     const allSameScore = players.every((p) => p.score === players[0].score);
+    const nonZeroScores = players.filter((p) => p.score > 0).length;
 
-    if (allSameScore) {
+    // 🧠 Case 1: All scores identical OR only one/few players have non-zero scores → random but even distribution
+    if (allSameScore || nonZeroScores < 2 || nonZeroScores <= players.length / 4) {
       const shuffled = [...players].sort(() => Math.random() - 0.5);
       const teams: Team[] = Array.from({ length: numTeams }, () => ({
         players: [],
@@ -15,7 +16,7 @@ export function useTeamBalancer() {
       }));
 
       shuffled.forEach((player, idx) => {
-        const teamIndex = idx % numTeams; // evenly distribute
+        const teamIndex = idx % numTeams;
         teams[teamIndex].players.push(player);
         teams[teamIndex].totalScore += player.score;
       });
@@ -23,7 +24,7 @@ export function useTeamBalancer() {
       return teams;
     }
 
-    // 🧮 Otherwise use the normal greedy balancing algorithm
+    // 🧮 Case 2: Normal balancing algorithm (greedy)
     const sorted = [...players].sort((a, b) => b.score - a.score);
     const teams: Team[] = Array.from({ length: numTeams }, () => ({
       players: [],
@@ -31,7 +32,7 @@ export function useTeamBalancer() {
     }));
 
     for (const player of sorted) {
-      // assign next player to team with the smallest total score
+      // Assign next player to team with the smallest total score
       const minIndex = teams.reduce(
         (minIdx, team, i, arr) =>
           team.totalScore < arr[minIdx].totalScore ? i : minIdx,

@@ -12,7 +12,10 @@ interface FormData {
   score: number;
 }
 
-export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) {
+export default function PlayerForm({
+  onAdd,
+  existingPlayers,
+}: PlayerFormProps) {
   const {
     register,
     handleSubmit,
@@ -22,10 +25,12 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
     clearErrors,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: { name: "", score: undefined },
+    defaultValues: { name: "", score: 1 },
+    mode: "onChange",
   });
 
   const nameValue = watch("name");
+  const scoreValue = watch("score");
   const [isDuplicate, setIsDuplicate] = useState(false);
 
   // 🧠 Duplicate Check
@@ -46,7 +51,7 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
   const onSubmit = (data: FormData) => {
     if (!data.name.trim() || isDuplicate) return;
 
-    onAdd({ name: data.name.trim(), score: Number(data.score) || 0 });
+    onAdd({ name: data.name.trim(), score: Number(data.score) || 1 });
     reset();
   };
 
@@ -59,9 +64,9 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
         👥 Add Player <span className="text-rose-500">*</span>
       </h2>
 
-      <div className="flex gap-3 flex-1">
-        {/* Player Name Field */}
-        <div className="flex flex-col w-2/3">
+      <div className="flex gap-3 flex-1 w-full">
+        <div className="flex flex-col w-7/12">
+          {/* Player Name Field */}
           <input
             {...register("name", {
               required: "Player name is required",
@@ -70,7 +75,7 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
                 message: "Name cannot exceed 30 characters",
               },
             })}
-            className={`border p-3 rounded-lg w-full focus:ring-2 ${
+            className={`border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none ${
               errors.name
                 ? "border-rose-400 focus:ring-rose-300"
                 : "border-gray-300 focus:ring-emerald-400"
@@ -78,30 +83,39 @@ export default function PlayerForm({ onAdd, existingPlayers }: PlayerFormProps) 
             placeholder="Enter player name"
           />
           {errors.name && (
-            <p className="text-rose-500 text-sm mt-1">{errors.name.message}</p>
+            <p className="text-rose-500 text-sm">{errors.name.message}</p>
           )}
         </div>
 
-        {/* Score Field */}
-        <input
-          {...register("score", {
-            min: 0,
-            max: 10,
-          })}
-          className="border border-gray-300 p-3 rounded-lg w-3/10! focus:ring-2 focus:ring-indigo-400 outline-none"
-          placeholder="Score (1-10)"
-          type="number"
-        />
-
-        {/* Add Button */}
-        <button
-          type="submit"
-          disabled={!nameValue.trim() || isDuplicate}
-          className="px-5 py-3 rounded-xl text-white shadow-sm transition-transform"
-        >
-          Add
-        </button>
+        <div className="flex flex-col w-5/12">
+          {/* Score Field */}
+          <input
+            {...register("score", {
+              min: 1,
+              max: 10,
+            })}
+            min={1}
+            max={10}
+            className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+            placeholder="Score (1-10)"
+            type="number"
+          />
+          {errors.score && (
+            <p className="text-rose-500 text-sm">{errors.score.message}</p>
+          )}
+        </div>
       </div>
+
+      {/* Add Button */}
+      <button
+        type="submit"
+        disabled={
+          !nameValue.trim() || scoreValue < 1 || scoreValue > 10 || isDuplicate
+        }
+        className="px-5 my-3 w-full rounded-xl text-white shadow-sm transition-transform"
+      >
+        Add
+      </button>
     </form>
   );
 }
